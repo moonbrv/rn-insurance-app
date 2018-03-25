@@ -58,7 +58,7 @@ const create = (baseURL = 'https://api.github.com/') => {
   }
 }
 
+const instance = create()
+
 // let's return back our create method as the default.
-export default {
-  create
-}
+export default instance

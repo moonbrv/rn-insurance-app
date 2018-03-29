@@ -1,7 +1,6 @@
-// import { put, select } from 'redux-saga/effects'
-// import { is } from 'ramda'
+import { put } from 'redux-saga/effects'
+import InsuranceActions from '../Redux/InsuranceRedux'
 
-// process STARTUP actions
 export function * startup (action) {
-  console.log('startup saga!')
+  yield put(InsuranceActions.insuranceRequest())
 }

@@ -4,9 +4,12 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  insuranceRequest: ['data'],
+  insuranceRequest: null,
+  insuranceRequestStart: null,
   insuranceSuccess: ['payload'],
   insuranceFailure: null
+}, {
+  prefix: '@insurance/'
 })
 
 export const InsuranceTypes = Types
@@ -21,23 +24,15 @@ export const INITIAL_STATE = Immutable({
   error: null
 })
 
-/* ------------- Selectors ------------- */
-
-export const InsuranceSelectors = {
-  getData: state => state.data
-}
-
 /* ------------- Reducers ------------- */
 
-// request the data from an api
-export const request = (state, { data }) =>
-  state.merge({ fetching: true, data, payload: null })
+// request the data from an api start
+export const requestStart = state =>
+  state.merge({ fetching: true })
 
 // successful api lookup
-export const success = (state, action) => {
-  const { payload } = action
-  return state.merge({ fetching: false, error: null, payload })
-}
+export const success = (state, { payload }) =>
+  state.merge({ fetching: false, error: null, payload })
 
 // Something went wrong somewhere.
 export const failure = state =>
@@ -46,7 +41,7 @@ export const failure = state =>
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.INSURANCE_REQUEST]: request,
+  [Types.INSURANCE_REQUEST_START]: requestStart,
   [Types.INSURANCE_SUCCESS]: success,
   [Types.INSURANCE_FAILURE]: failure
 })

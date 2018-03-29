@@ -4,6 +4,8 @@ import { createActions } from 'reduxsauce'
 
 const { Types, Creators } = createActions({
   startup: null
+}, {
+  prefix: '@startup/'
 })
 
 export const StartupTypes = Types

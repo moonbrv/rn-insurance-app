@@ -1,31 +1,26 @@
-/* ***********************************************************
-* A short word on how to use this automagically generated file.
-* We're often asked in the ignite gitter channel how to connect
-* to a to a third party api, so we thought we'd demonstrate - but
-* you should know you can use sagas for other flow control too.
-*
-* Other points:
-*  - You'll need to add this saga to sagas/index.js
-*  - This template uses the api declared in sagas/index.js, so
-*    you'll need to define a constant in that file.
-*************************************************************/
-
 import { call, put } from 'redux-saga/effects'
 import InsuranceActions from '../Redux/InsuranceRedux'
-// import { InsuranceSelectors } from '../Redux/InsuranceRedux'
+import * as R from 'ramda'
+
+const titleProp = 'title'
+const titleLens = R.lens(R.prop(titleProp), R.assoc(titleProp))
+
+const getTitleName = R.compose(
+  R.prop(1),
+  R.split(':')
+)
+
+const transformTypesResponse = R.compose(
+  R.map(R.over(titleLens, getTitleName)),
+  R.map(R.omit(['ns'])),
+  R.pathOr([], ['data', 'query', 'categorymembers'])
+)
 
 export function * getInsurance (api, action) {
-  const { data } = action
-  // get current data from Store
-  // const currentData = yield select(InsuranceSelectors.getData)
-  // make the call to the api
-  const response = yield call(api.getinsurance, data)
-
-  // success?
+  const response = yield call(api.getInsurances)
+  const categoryTypes = transformTypesResponse(response)
   if (response.ok) {
-    // You might need to change the response here - do this with a 'transform',
-    // located in ../Transforms/. Otherwise, just pass the data back from the api.
-    yield put(InsuranceActions.insuranceSuccess(response.data))
+    yield put(InsuranceActions.insuranceSuccess(categoryTypes))
   } else {
     yield put(InsuranceActions.insuranceFailure())
   }

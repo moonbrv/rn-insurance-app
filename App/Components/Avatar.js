@@ -7,11 +7,13 @@ import { Images } from '../Themes'
 
 const UserAvatar = props => {
   return (
+    <View style={styles.container}>
       <Avatar
-        small
+        medium
         rounded
         source={Images.avatarPlaceholder}
       />
+    </View>
   )
 }
 

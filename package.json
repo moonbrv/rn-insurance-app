@@ -32,6 +32,7 @@
     "prop-types": "^15.6.0",
     "querystringify": "1.0.0",
     "ramda": "^0.25.0",
+    "ramda-adjunct": "^2.6.0",
     "react": "16.0.0",
     "react-native": "0.50.4",
     "react-native-animatable": "^1.2.4",

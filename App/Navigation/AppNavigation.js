@@ -11,7 +11,8 @@ const PrimaryNav = StackNavigator({
 }, {
   // Default config for all screens
   headerMode: 'none',
-  initialRouteName: 'HomeScreen',
+  // initialRouteName: 'HomeScreen',
+  initialRouteName: 'AddNewInsuranceScreen',
   navigationOptions: {
     headerStyle: styles.header
   }

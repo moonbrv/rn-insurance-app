@@ -9,6 +9,6 @@ export default StyleSheet.create({
   },
   headerText: {
     color: Colors.frost,
-    ...Fonts.style.h4
+    ...Fonts.style.h5
   }
 })

@@ -3,11 +3,13 @@ import { persistReducer } from 'redux-persist'
 import configureStore from './CreateStore'
 import rootSaga from '../Sagas/'
 import ReduxPersist from '../Config/ReduxPersist'
+import { reducer as formReducer } from 'redux-form'
 
 /* ------------- Assemble The Reducers ------------- */
 export const reducers = combineReducers({
   nav: require('./NavigationRedux').reducer,
-  insurance: require('./InsuranceRedux').reducer
+  insurance: require('./InsuranceRedux').reducer,
+  form: formReducer
 })
 
 export default () => {

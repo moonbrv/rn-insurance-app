@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 // import PropTypes from 'prop-types';
 import { View, Text } from 'react-native'
-import { Field, reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
+import { Field, reduxForm, touch } from 'redux-form'
 import InputField from './InputField'
+import PickerField from './PickerField'
 import styles from './Styles/AddInsuranceFormStyle'
 import { Button } from 'react-native-elements'
 import { Colors } from '../Themes'
+import { compose, pathOr, path } from 'ramda'
+import { NavigationActions } from 'react-navigation'
 
 import {
   required,
@@ -13,6 +17,8 @@ import {
   positiveValue,
   onlyNumericCharacters
 } from '../Services/ReduxFormValidators'
+
+const formName = 'addInsuranceForm'
 
 class AddInsuranceForm extends Component {
   // // Prop type warnings
@@ -26,10 +32,25 @@ class AddInsuranceForm extends Component {
   //   someSetting: false
   // }
 
-  renderTextInput = props => {
+  submitData = (values) => {
+    const {
+      currentKey,
+      validateForm,
+      handleSubmit,
+      goBack,
+      submitSucceeded
+    } = this.props
+    validateForm()
+    handleSubmit(values)
+    if (submitSucceeded) {
+      goBack(currentKey)
+    }
+  }
+
+  renderField = (props, comp = InputField) => {
     return (
       <Field
-        component={InputField}
+        component={comp}
         {...props}
       />
     )
@@ -38,13 +59,13 @@ class AddInsuranceForm extends Component {
   render () {
     return (
       <View style={styles.container}>
-        {this.renderTextInput({
+        {this.renderField({
           name: 'insuranceName',
           label: 'Insurance Name',
           placeholder: 'Please Enter Insurance Name',
           validate: [required]
         })}
-        {this.renderTextInput({
+        {this.renderField({
           name: 'yearlyPremium',
           label: 'Yearly Premium',
           placeholder: 'Please Entery Early Premium',
@@ -56,11 +77,18 @@ class AddInsuranceForm extends Component {
             onlyNumericCharacters
           ]
         })}
+        {this.renderField({
+          name: 'insuranceType',
+          label: 'Insurance Type',
+          placeholder: 'Please Choose Insurance Type',
+          dataSet: this.props.insuranceTypes,
+          validate: [required]
+        }, PickerField)}
         <View style={styles.btnWrapper}>
           <Button
             title='Done'
             icon={{name: 'check', size: 28}}
-            onPress={this.props.handleSubmit}
+            onPress={this.submitData}
             backgroundColor={Colors.primaryBlue}
             borderRadius={5}
             fontSize={20}
@@ -71,4 +99,24 @@ class AddInsuranceForm extends Component {
   }
 }
 
-export default reduxForm({form: 'addInsuranceForm'})(AddInsuranceForm)
+const mapStateToProps = state => {
+  const currentIndex = path(['nav', 'index'], state)
+  return {
+    insuranceTypes: pathOr([], ['insurance', 'payload'], state),
+    submitSucceeded: pathOr(false, ['form', formName, 'submitSucceeded'], state),
+    currentKey: path(['nav', 'routes', currentIndex, 'key'], state)
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    validateForm: () => dispatch(touch(formName)),
+    goBack: key => dispatch(NavigationActions.back({ key }))
+  }
+}
+
+const enchance = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  reduxForm({form: formName})
+)
+export default enchance(AddInsuranceForm)

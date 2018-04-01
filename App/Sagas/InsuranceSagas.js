@@ -1,7 +1,6 @@
 import { call, put } from 'redux-saga/effects'
 import InsuranceActions from '../Redux/InsuranceRedux'
 import * as R from 'ramda'
-import { renameKeys } from 'ramda-adjunct'
 
 const titleProp = 'title'
 const titleLens = R.lens(R.prop(titleProp), R.assoc(titleProp))
@@ -12,10 +11,6 @@ const getTitleName = R.compose(
 )
 
 const transformTypesResponse = R.compose(
-  R.map(renameKeys({
-    pageid: 'key',
-    title: 'label'
-  })),
   R.map(R.over(titleLens, getTitleName)),
   R.map(R.omit(['ns'])),
   R.pathOr([], ['data', 'query', 'categorymembers'])

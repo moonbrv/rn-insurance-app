@@ -1,5 +1,6 @@
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
+import * as R from 'ramda'
 
 /* ------------- Types and Action Creators ------------- */
 
@@ -7,7 +8,8 @@ const { Types, Creators } = createActions({
   insuranceRequest: null,
   insuranceRequestStart: null,
   insuranceSuccess: ['payload'],
-  insuranceFailure: null
+  insuranceFailure: null,
+  addNewInsurance: ['data']
 }, {
   prefix: '@insurance/'
 })
@@ -17,14 +19,27 @@ export default Creators
 
 /* ------------- Initial State ------------- */
 
+const yearlyPremiumLens = R.lensProp('yearlyPremium')
+
+const dummyData = [
+  { insuranceName: 'Hgvvgg', yearlyPremium: 234, insuranceType: 'Health insurance' },
+  { insuranceName: 'Hgvvgg', yearlyPremium: 442, insuranceType: 'Health insurance' },
+  { insuranceName: 'Hgvvgg', yearlyPremium: 234, insuranceType: 'Health insurance' }
+]
+
 export const INITIAL_STATE = Immutable({
-  data: null,
+  data: dummyData,
   fetching: null,
   payload: null,
   error: null
 })
 
 /* ------------- Reducers ------------- */
+
+export const updateUserInsurance = (state, { data }) => {
+  const newInsurance = R.over(yearlyPremiumLens, Number, data)
+  return state.merge({ data: R.append(newInsurance, state.data) })
+}
 
 // request the data from an api start
 export const requestStart = state =>
@@ -43,5 +58,6 @@ export const failure = state =>
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.INSURANCE_REQUEST_START]: requestStart,
   [Types.INSURANCE_SUCCESS]: success,
-  [Types.INSURANCE_FAILURE]: failure
+  [Types.INSURANCE_FAILURE]: failure,
+  [Types.ADD_NEW_INSURANCE]: updateUserInsurance
 })

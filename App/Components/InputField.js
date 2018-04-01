@@ -24,7 +24,7 @@ export default class InputField extends Component {
 
   render () {
     const {input, ...custom} = this.props
-    const label = R.pathOr(input.name, ['label'], custom)
+    const label = R.pathOr(R.prop('name', input), ['label'], custom)
 
     const {invalid, error, touched} = custom.meta
 

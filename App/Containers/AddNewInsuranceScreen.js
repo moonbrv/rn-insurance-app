@@ -8,6 +8,7 @@ import HeaderTitle from '../Components/HeaderTitle'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { Colors } from '../Themes'
 import AddInsuranceForm from '../Components/AddInsuranceForm'
+import InsuranceActions from '../Redux/InsuranceRedux'
 
 // Styles
 import styles from './Styles/AddNewInsuranceScreenStyle'
@@ -25,11 +26,7 @@ const BackButton = ({ onPress }) => (
 )
 
 class AddNewInsuranceScreen extends Component {
-  // goBack = () => this.props.navigation.goBack()
-
-  addInsurance = (values) => {
-    console.log(values)
-  }
+  goBack = () => this.props.navigation.goBack()
 
   render () {
     return (
@@ -37,11 +34,11 @@ class AddNewInsuranceScreen extends Component {
         <KeyboardAvoidingView behavior='position'>
           <Header
             placement="left"
-            leftComponent={<BackButton onPress={this.props.navigation.goBack} />}
+            leftComponent={<BackButton onPress={this.goBack} />}
             centerComponent={<HeaderTitle title="Add new insurance" />}
           />
           <AddInsuranceForm
-            onSubmit={this.addInsurance}
+            onSubmit={this.props.addInsurance}
           />
         </KeyboardAvoidingView>
       </ScrollView>
@@ -56,6 +53,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    addInsurance: insurance => dispatch(InsuranceActions.addNewInsurance(insurance))
   }
 }
 

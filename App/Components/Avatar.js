@@ -5,7 +5,7 @@ import styles from './Styles/AvatarStyle'
 import { Avatar } from 'react-native-elements'
 import { Images } from '../Themes'
 
-const UserAvatar = props => {
+const UserAvatar = () => {
   return (
     <View style={styles.container}>
       <Avatar

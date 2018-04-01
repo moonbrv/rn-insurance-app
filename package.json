@@ -67,6 +67,8 @@
     "babel-preset-react-native": "^3.0.2",
     "enzyme": "^3.2.0",
     "enzyme-adapter-react-16": "^1.1.0",
+    "eslint-plugin-flowtype": "^2.46.1",
+    "flow-bin": "^0.69.0",
     "husky": "^0.14.3",
     "ignite-animatable": "^1.0.0",
     "ignite-elements": "^0.3.0",
@@ -105,6 +107,9 @@
   "config": {},
   "standard": {
     "parser": "babel-eslint",
+    "plugins": [
+      "flowtype"
+    ],
     "globals": [
       "describe",
       "test",

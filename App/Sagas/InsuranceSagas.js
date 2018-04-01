@@ -32,7 +32,7 @@ export function * getInsurance (api, action) {
       const Snackbar = require('react-native-snackbar')
       Snackbar.show({
         title: 'An Error Occured!',
-        duration: 3000, // pathOr(3000, ['LENGTH_LONG'], Snackbar),
+        duration: pathOr(3000, ['LENGTH_LONG'], Snackbar),
         backgroundColor: Colors.error
       })
     }

@@ -40,10 +40,10 @@ class RootContainer extends Component {
 }
 
 const mapStateToProps = state => {
-  const currentIndex = path(['nav', 'index'], state)
-  const currentKey = path(['nav', 'routes', currentIndex, 'key'], state)
+  const navigationIndex = path(['nav', 'index'], state)
+  const currentKey = path(['nav', 'routes', navigationIndex, 'key'], state)
   return {
-    navigationIndex: state.nav.index,
+    navigationIndex,
     currentKey
   }
 }

@@ -28,7 +28,7 @@ const transformNewInsurance = (data, id = uuidv1()) => R.compose(
   R.set(idLens, id)
 )(data)
 
-const dummyData = [
+export const dummyData = [
   { insuranceName: 'Hands', yearlyPremium: 200.5, insuranceType: 'Health insurance', id: 'fsddf45-326-6fdf' },
   { insuranceName: 'Foots', yearlyPremium: 442, insuranceType: 'Health insurance', id: '454453gg-fgd' },
   { insuranceName: 'Arms', yearlyPremium: 234, insuranceType: 'Health insurance', id: 'fdfs45-34t5tgf' },

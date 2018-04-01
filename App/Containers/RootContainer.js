@@ -21,7 +21,7 @@ class RootContainer extends Component {
   }
 
   onAndroidBackButton = () => {
-    const { currentKey, navigationIndex, goBack} = this.props
+    const { currentKey, navigationIndex, goBack } = this.props
     const shouldStayInApp = !!navigationIndex
     if (shouldStayInApp) {
       goBack(currentKey)

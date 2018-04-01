@@ -3,15 +3,13 @@ import { Colors } from '../../Themes'
 
 export default StyleSheet.create({
   container: {
-    flex: 1
-  },
-  errorBlock: {
-    height: 20
+    flex: 1,
+    marginBottom: 5
   },
   errorMsgWrapper: {
     position: 'absolute',
     left: 0,
-    bottom: -10
+    bottom: -8
   },
   labelError: {
     color: Colors.error

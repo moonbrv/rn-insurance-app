@@ -29,21 +29,12 @@ const transformNewInsurance = (data, id = uuidv1()) => R.compose(
 )(data)
 
 const dummyData = [
-  { insuranceName: 'Hgvvgg', yearlyPremium: 234, insuranceType: 'Health insurance', id: 'fsddf45-326-6fdf' },
-  { insuranceName: 'sfdfgsdg sfsfdfds', yearlyPremium: 442, insuranceType: 'Health insurance', id: '454453gg-fgd' },
-  { insuranceName: 'jhj ghjdf tret', yearlyPremium: 234, insuranceType: 'Health insurance', id: 'fdfs45-34t5tgf' },
-  { insuranceName: 'Hgvvgg', yearlyPremium: 234, insuranceType: 'Health insurance', id: 'fsdsdfds-f36df' },
-  { insuranceName: 'sfdfgsdg sfsfdfds', yearlyPremium: 442, insuranceType: 'Health insurance', id: '4--54g452gfgd' },
-  { insuranceName: 'jhj ghjdf tret', yearlyPremium: 234, insuranceType: 'Health insurance', id: 'fdfs134t5t-gf' },
-  { insuranceName: 'Hgvvgg', yearlyPremium: 234, insuranceType: 'Health insurance', id: 'fsd5hgcf--df' },
-  { insuranceName: 'sfdfgsdg sfsfdfds', yearlyPremium: 442, insuranceType: 'Health insurance', id: '454g-cbvc2g-fgd' },
-  { insuranceName: 'jhj ghjdf tret', yearlyPremium: 234, insuranceType: 'Health insurance', id: 'fdfst-tdsfgfg-5tgf' },
-  { insuranceName: 'Hgvvgg', yearlyPremium: 234, insuranceType: 'Health insurance', id: 'fsdfd-fsg45-3df' },
-  { insuranceName: 'sfdfgsdg sfsfdfds', yearlyPremium: 442, insuranceType: 'Health insurance', id: '454-ggb34-5gfgd' },
-  { insuranceName: 'jhj ghjdf tret', yearlyPremium: 234, insuranceType: 'Health insurance', id: 'fdfst-5fgb5-45ttgf' },
-  { insuranceName: 'Hgvvgg', yearlyPremium: 234, insuranceType: 'Health insurance', id: 'fsdgfbgb-gh4fd-f' },
-  { insuranceName: 'sfdfgsdg sfsfdfds', yearlyPremium: 442, insuranceType: 'Health insurance', id: '454-ggfer4-4cgd' },
-  { insuranceName: 'jhj ghjdf tret', yearlyPremium: 234, insuranceType: 'Health insurance', id: 'fdfs-t5t534-5fdgdfgf' },
+  { insuranceName: 'Hands', yearlyPremium: 200.5, insuranceType: 'Health insurance', id: 'fsddf45-326-6fdf' },
+  { insuranceName: 'Foots', yearlyPremium: 442, insuranceType: 'Health insurance', id: '454453gg-fgd' },
+  { insuranceName: 'Arms', yearlyPremium: 234, insuranceType: 'Health insurance', id: 'fdfs45-34t5tgf' },
+  { insuranceName: 'Head', yearlyPremium: 300, insuranceType: 'Health insurance', id: 'fsdsdfds-f36df' },
+  { insuranceName: 'Back', yearlyPremium: 500.38, insuranceType: 'Health insurance', id: '4--54g452gfgd' },
+  { insuranceName: 'Lungs', yearlyPremium: 700, insuranceType: 'Health insurance', id: 'fdfs134t5t-gf' }
 ]
 
 export const INITIAL_STATE = Immutable({

@@ -1,6 +1,7 @@
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
 import * as R from 'ramda'
+import uuidv1 from 'uuid/v1'
 
 /* ------------- Types and Action Creators ------------- */
 
@@ -20,11 +21,16 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 const yearlyPremiumLens = R.lensProp('yearlyPremium')
+const idLens = R.lensProp('id')
+const transformNewInsurance = (data, id = uuidv1()) => R.compose(
+  R.over(yearlyPremiumLens, Number),
+  R.set(idLens, id)
+)(data)
 
 const dummyData = [
-  { insuranceName: 'Hgvvgg', yearlyPremium: 234, insuranceType: 'Health insurance' },
-  { insuranceName: 'Hgvvgg', yearlyPremium: 442, insuranceType: 'Health insurance' },
-  { insuranceName: 'Hgvvgg', yearlyPremium: 234, insuranceType: 'Health insurance' }
+  { insuranceName: 'Hgvvgg', yearlyPremium: 234, insuranceType: 'Health insurance', id: 'fsdfdf' },
+  { insuranceName: 'sfdfgsdg sfsfdfds', yearlyPremium: 442, insuranceType: 'Health insurance', id: '454ggfgd' },
+  { insuranceName: 'jhj ghjdf tret', yearlyPremium: 234, insuranceType: 'Health insurance', id: 'fdfst5tgf' }
 ]
 
 export const INITIAL_STATE = Immutable({
@@ -37,7 +43,7 @@ export const INITIAL_STATE = Immutable({
 /* ------------- Reducers ------------- */
 
 export const updateUserInsurance = (state, { data }) => {
-  const newInsurance = R.over(yearlyPremiumLens, Number, data)
+  const newInsurance = transformNewInsurance(data)
   return state.merge({ data: R.append(newInsurance, state.data) })
 }
 

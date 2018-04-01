@@ -6,6 +6,7 @@ import ReduxPersist from '../Config/ReduxPersist'
 import Config from '../Config/DebugConfig'
 import createSagaMiddleware from 'redux-saga'
 import ScreenTracking from './ScreenTrackingMiddleware'
+import successAddInsuranceMiddleware from '../Middleware/successAddInsurance'
 
 // creates the store
 export default (rootReducer, rootSaga) => {
@@ -37,6 +38,10 @@ export default (rootReducer, rootSaga) => {
     })
     middleware.push(logger)
   }
+
+  /* ------------- Redirect on Success add Insurance Middleware ------------- */
+
+  middleware.push(successAddInsuranceMiddleware)
 
   /* ------------- Assemble Middleware ------------- */
 

@@ -23,7 +23,8 @@ const colors = {
   banner: '#5F3E63',
   text: '#E0D7E5',
   inputGrey: '#86939e',
-  primaryBlue: '#476DC5'
+  primaryBlue: '#476DC5',
+  success: '#4CAF50'
 }
 
 export default colors

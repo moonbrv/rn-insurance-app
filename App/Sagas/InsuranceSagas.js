@@ -17,6 +17,7 @@ const transformTypesResponse = R.compose(
 )
 
 export function * getInsurance (api, action) {
+  yield put(InsuranceActions.insuranceRequestStart())
   const response = yield call(api.getInsurances)
   const categoryTypes = transformTypesResponse(response)
   if (response.ok) {

@@ -14,8 +14,7 @@ import { NavigationActions } from 'react-navigation'
 import {
   required,
   number,
-  positiveValue,
-  onlyNumericCharacters
+  positiveValue
 } from '../Services/ReduxFormValidators'
 
 const formName = 'addInsuranceForm'
@@ -34,17 +33,11 @@ class AddInsuranceForm extends Component {
 
   submitData = (values) => {
     const {
-      currentKey,
       validateForm,
       handleSubmit,
-      goBack,
-      submitSucceeded
     } = this.props
     validateForm()
     handleSubmit(values)
-    if (submitSucceeded) {
-      goBack(currentKey)
-    }
   }
 
   renderField = (props, comp = InputField) => {
@@ -73,8 +66,7 @@ class AddInsuranceForm extends Component {
           validate: [
             required,
             number,
-            positiveValue,
-            onlyNumericCharacters
+            positiveValue
           ]
         })}
         {this.renderField({
@@ -100,18 +92,15 @@ class AddInsuranceForm extends Component {
 }
 
 const mapStateToProps = state => {
-  const currentIndex = path(['nav', 'index'], state)
   return {
     insuranceTypes: pathOr([], ['insurance', 'payload'], state),
-    submitSucceeded: pathOr(false, ['form', formName, 'submitSucceeded'], state),
-    currentKey: path(['nav', 'routes', currentIndex, 'key'], state)
+    submitSucceeded: pathOr(false, ['form', formName, 'submitSucceeded'], state)
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    validateForm: () => dispatch(touch(formName)),
-    goBack: key => dispatch(NavigationActions.back({ key }))
+    validateForm: () => dispatch(touch(formName))
   }
 }
 

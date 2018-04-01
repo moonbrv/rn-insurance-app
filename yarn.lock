@@ -7408,6 +7408,10 @@ react-native-safe-area-view@^0.7.0:
   dependencies:
     hoist-non-react-statics "^2.3.1"
 
+react-native-snackbar@^0.4.6:
+  version "0.4.6"
+  resolved "https://registry.yarnpkg.com/react-native-snackbar/-/react-native-snackbar-0.4.6.tgz#3c4a051bf80fed3ca2c9513e84ac99ae4df59ff1"
+
 "react-native-tab-view@github:react-navigation/react-native-tab-view":
   version "0.0.74"
   resolved "https://codeload.github.com/react-navigation/react-native-tab-view/tar.gz/36ebd834d78b841fc19778c966465d02fd1213bb"

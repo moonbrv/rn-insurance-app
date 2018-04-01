@@ -1,6 +1,8 @@
 import { call, put } from 'redux-saga/effects'
 import InsuranceActions from '../Redux/InsuranceRedux'
 import * as R from 'ramda'
+import Snackbar from 'react-native-snackbar'
+import { Colors } from '../Themes'
 
 const titleProp = 'title'
 const titleLens = R.lens(R.prop(titleProp), R.assoc(titleProp))
@@ -24,5 +26,10 @@ export function * getInsurance (api, action) {
     yield put(InsuranceActions.insuranceSuccess(categoryTypes))
   } else {
     yield put(InsuranceActions.insuranceFailure())
+    Snackbar.show({
+      title: 'An Error Occured!',
+      duration: Snackbar.LENGTH_LONG,
+      backgroundColor: Colors.error
+    })
   }
 }

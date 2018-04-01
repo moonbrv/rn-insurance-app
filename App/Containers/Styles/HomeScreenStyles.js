@@ -1,17 +1,41 @@
 import { StyleSheet } from 'react-native'
 import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 
+const row = {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center'
+}
+
 export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.snow
   },
+  modalContainer: {
+    backgroundColor: Colors.snow,
+    paddingTop: 20,
+    paddingBottom: 20,
+    borderRadius: 5
+  },
   row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 20
+    ...row,
+    paddingTop: 20,
+    paddingBottom: 20
+  },
+  modalTitle: {
+    ...Fonts.style.h5,
+    marginBottom: 10
+  },
+  modalRow: {
+    ...row,
+    justifyContent: 'center'
+  },
+  centringBlock: {
+    alignItems: 'center'
+  },
+  halfScreen: {
+    width: '50%'
   },
   leftScreenBlock: {
     width: '40%',

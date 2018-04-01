@@ -6,17 +6,38 @@ import HeaderTitle from '../Components/HeaderTitle'
 import { Colors } from '../Themes'
 import { connect } from 'react-redux'
 import { path, pathOr, memoizeWith, identity, prop, add, __, reduce, map, addIndex } from 'ramda'
+import Modal from 'react-native-modal'
+import InsuranceActions from '../Redux/InsuranceRedux'
 
 // Styles
 import styles from './Styles/HomeScreenStyles'
 
-const mapIndexed = addIndex(map)
+const INITIAL_STATE = {
+  modalIsOpen: false,
+  idOfInsuranceToDelete: null
+}
 
 class HomeScreen extends Component {
+  state = INITIAL_STATE
+
+  openModal = data => () => this.setState({
+    modalIsOpen: true,
+    insuranceToDelete: data
+  })
+
+  closeModal = () => this.setState(INITIAL_STATE)
+
   goToNewInsuranceScreen = () => this.props.navigation.navigate('AddNewInsuranceScreen')
 
-  renderListItem = (data, index) => {
-    // insuranceName: "Hgvvgg", yearlyPremium: 234, insuranceType: "Health insurance"
+  deleteItem = () => {
+    const { insuranceToDelete } = this.state
+    this.closeModal()
+    if (insuranceToDelete) {
+      this.props.deleteInsurance(insuranceToDelete)
+    }
+  }
+
+  renderListItem = data=> {
     return (
       <ListItem
         key={data.id}
@@ -26,6 +47,7 @@ class HomeScreen extends Component {
           name: 'delete',
           color: Colors.error
         }}
+        onPressRightIcon={this.openModal(data)}
       />
     )
   }
@@ -35,37 +57,69 @@ class HomeScreen extends Component {
     const btnIcon = isFetching ? null : {name: 'check', size: 28}
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container}>
-          <Header
-            placement="left"
-            leftComponent={<UserAvatar />}
-            centerComponent={<HeaderTitle title="Hello John!" />}
-          />
-          <View style={styles.row}>
-            <View style={styles.leftScreenBlock}>
-              <Text style={styles.insuranceLabel}>
-                Total Insurance:
-              </Text>
-              <Text style={styles.insurancePrice}>
-                {this.props.insuranceSum}
-              </Text>
-            </View>
-            <View style={styles.rightScreenBlock}>
-              <Button
-                title='Add New Insurance'
-                icon={btnIcon}
-                backgroundColor={Colors.primaryBlue}
-                borderRadius={5}
-                loading={isFetching}
-                disabled={isFetching}
-                onPress={this.goToNewInsuranceScreen}
-              />
-            </View>
+        <Header
+          placement="left"
+          leftComponent={<UserAvatar />}
+          centerComponent={<HeaderTitle title="Hello John!" />}
+        />
+        <View style={styles.row}>
+          <View style={styles.leftScreenBlock}>
+            <Text style={styles.insuranceLabel}>
+              Total Insurance:
+            </Text>
+            <Text style={styles.insurancePrice}>
+              {this.props.insuranceSum}
+            </Text>
           </View>
+          <View style={styles.rightScreenBlock}>
+            <Button
+              title='Add New Insurance'
+              icon={btnIcon}
+              backgroundColor={Colors.primaryBlue}
+              borderRadius={5}
+              loading={isFetching}
+              disabled={isFetching}
+              onPress={this.goToNewInsuranceScreen}
+            />
+          </View>
+        </View>
+        <ScrollView style={styles.container}>
           <List>
-            {mapIndexed(this.renderListItem, this.props.insuranceList)}
+            {map(this.renderListItem, this.props.insuranceList)}
           </List>
         </ScrollView>
+        <Modal
+          isVisible={this.state.modalIsOpen}
+          onBackButtonPress={this.closeModal}
+          onBackdropPress={this.closeModal}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.centringBlock}>
+              <Text style={styles.modalTitle}>Are you sure want to delete?</Text>
+              <Text style={styles.modalTitle}>{ path(['insuranceToDelete', 'insuranceName'], this.state) }</Text>
+            </View>
+            <View style={styles.modalRow}>
+              <View style={styles.halfScreen}>
+                <Button
+                  title='Cancel'
+                  icon={{name: 'block', size: 28}}
+                  backgroundColor={Colors.success}
+                  borderRadius={5}
+                  onPress={this.closeModal}
+                />
+              </View>
+              <View style={styles.halfScreen}>
+                <Button
+                  title='Delete'
+                  icon={{name: 'delete', size: 28}}
+                  backgroundColor={Colors.error}
+                  borderRadius={5}
+                  onPress={this.deleteItem}
+                />
+              </View>
+            </View>
+          </View>
+        </Modal>
       </View>
     )
   }
@@ -90,7 +144,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    deleteInsurance: data => dispatch(InsuranceActions.deleteInsurance(data))
   }
 }
 
